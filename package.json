@@ -2,10 +2,12 @@
   "name": "projects",
   "version": "0.0.1",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "dotenv": "^8.1.0",
     "irc": "latest",
     "nickserv": "^0.4.4",
     "node-irc": "0.0.4",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   }
 }

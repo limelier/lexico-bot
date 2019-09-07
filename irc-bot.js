@@ -1,7 +1,6 @@
 const irc = require('irc');
-const request = require('request');
 const config = require('./config');
-
+const getFirstDefinition = require('./requests/getFirstDefinition');
 
 const { server, nick, userName, password, channels } = config.irc;
 const client = new irc.Client(server, nick, {
@@ -12,11 +11,17 @@ const client = new irc.Client(server, nick, {
 });
 
 const trigger = config.bot.prefix + config.bot.command + ' ';
-client.addListener('message', function (from, to, message) {
+client.addListener('message', async function (from, to, message) {
     console.log(from + ' => ' + to + ': ' + message);
     if (message.startsWith(trigger)) {
-        const result = message.slice(trigger.length).trim();
-        client.say(to, '<insert lexico result for "' + result + '" here>');
+        const word = message.slice(trigger.length).trim();
+        const result = await getFirstDefinition(word);
+        if (result.found) {
+            client.say(to, result.definition);
+        }
+        else {
+            client.say(to, 'No exact matches for your query.');
+        }
     }
 });
 
