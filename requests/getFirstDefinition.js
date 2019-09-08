@@ -11,6 +11,6 @@ module.exports = async function(word) {
 
     return {
         found: true,
-        definition: $('.trg > p > .ind', html).text()
+        definition: $('.trg > p > .ind', html).eq(0).text()
     };
 };
