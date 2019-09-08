@@ -9,8 +9,11 @@ module.exports = async function(word) {
     const exactMatch = $('.no-exact-matches', html).text() === "";
     if (!exactMatch) return {found: false};
 
+    const result = $('.trg > p > .ind', html);
+
     return {
         found: true,
-        definition: $('.trg > p > .ind', html).eq(0).text()
+        definition: result.eq(0).text(),
+        multiple: result.get().length > 1
     };
 };

@@ -16,12 +16,21 @@ client.addListener('message', async function (from, to, message) {
     if (message.startsWith(trigger)) {
         const word = message.slice(trigger.length).trim();
         const result = await getFirstDefinition(word);
+
+        let response = '';
+
         if (result.found) {
-            client.say(to, result.definition);
+            response += result.definition;
+            if (result.multiple) {
+                response += '\n[More than one definition exists.]';
+            }
         }
         else {
-            client.say(to, 'No exact matches for your query.');
+            response = '[No exact matches for your query.]';
         }
+
+        client.say(to, response);
+
     }
 });
 
